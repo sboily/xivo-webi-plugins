@@ -44,8 +44,12 @@ class FK(FlaskView):
 
     def index(self):
         with confd_client(current_app.config['confd']) as confd:
-            fk = gen_template_fk(confd, confd.users.relations(current_user.get_uuid()).list_funckeys())
+            fk = gen_template_fk(confd, confd.users.relations(get_id(confd, current_user.get_uuid())).list_funckeys())
         return render_template('fk.html', fk=fk, ws=current_app.config['ws'])
+
+def get_id(confd, uuid):
+    user = confd.users.get(uuid)
+    return user['id']
 
 def gen_template_fk(confd, fk):
    template = dict()

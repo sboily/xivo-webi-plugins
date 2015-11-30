@@ -20,7 +20,6 @@ from xivo_dao.alchemy.meetmefeatures import MeetmeFeatures
 from xivo_dao.alchemy.staticmeetme import StaticMeetme
 from xivo_dao.alchemy.extension import Extension
 from xivo_dao.helpers.db_manager import daosession
-from xivo_dao.resources.cti_profile.model import db_converter
 
 @daosession
 def list(session):

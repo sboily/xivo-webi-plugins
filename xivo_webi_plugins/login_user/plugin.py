@@ -24,6 +24,6 @@ q_loginuser = Blueprint('q_loginuser', __name__, template_folder='templates')
 class Plugin(object):
 
     def load(self, core):
-        LoginUser.register(q_index, route_base='/x/loginuser', route_prefix='')
-        LogoutUser.register(q_index, route_base='/x/logoutuser', route_prefix='')
+        LoginUser.register(q_loginuser, route_base='/x/loginuser', route_prefix='')
+        LogoutUser.register(q_loginuser, route_base='/x/logoutuser', route_prefix='')
         core.register_blueprint(q_loginuser)

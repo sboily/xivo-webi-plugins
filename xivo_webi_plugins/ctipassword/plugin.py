@@ -23,5 +23,5 @@ q_ctipassword = Blueprint('q_ctipassword', __name__, template_folder='templates'
 class Plugin(object):
 
     def load(self, core):
-        CTIPassword.register(q_index, route_base='/x/ctipassword', route_prefix='')
+        CTIPassword.register(q_ctipassword, route_base='/x/ctipassword', route_prefix='')
         core.register_blueprint(q_ctipassword)

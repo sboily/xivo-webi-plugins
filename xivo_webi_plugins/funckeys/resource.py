@@ -39,7 +39,7 @@ def new_ctid_client(config):
     yield ctid_client(**config)
 
 
-class FK(object):
+class FK(FlaskView):
     decorators = [verify_token]
 
     def index(self):

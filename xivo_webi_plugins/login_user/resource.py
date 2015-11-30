@@ -19,7 +19,12 @@
 import logging
 from contextlib import contextmanager
 
-from flask import render_template, redirect, url_for, current_app, make_response
+from flask import render_template
+from flask import redirect
+from flask import url_for
+from flask import current_app
+from flask import make_response
+from flask import request
 from flask.ext.classy import FlaskView
 
 from xivo_auth_client import Client as client_auth
@@ -36,7 +41,7 @@ def new_confd_client(config):
     yield client_confd(**config)
 
 @contextmanager
-def new_auth_client(config):
+def xivo_auth(config):
     yield client_auth(**config)
 
 
@@ -45,17 +50,15 @@ class LoginUser(FlaskView):
     def get(self):
         form = LoginUserForm()
         session = request.cookies.get("x-auth-session")
-        host = request.host
 
         if session:
-            return redirect('https://{}'.format(host))
+            return redirect(url_for('login_user.LoginUser:get'))
         return render_template('login.html', form=form)
 
     def post(self):
         form = LoginUserForm()
 
         if form.validate_on_submit():
-            host = request.host
             current_app.config['auth']['username'] = form.username.data
             current_app.config['auth']['password'] = form.password.data
 
@@ -66,7 +69,7 @@ class LoginUser(FlaskView):
                 token = token_data['token']
 
             if token:
-                redirect_to_index = redirect('https://{}'.format(host))
+                redirect_to_index = redirect(url_for('q_index.Index:index'))
                 response = make_response(redirect_to_index)
                 response.set_cookie('x-auth-session', token)
 

@@ -27,4 +27,4 @@ class Index(FlaskView):
     decorators = [verify_token]
 
     def index(self):
-        return render_template('index.html')
+        return render_template('index_user.html')

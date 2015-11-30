@@ -18,18 +18,20 @@
 import logging
 
 from flask import render_template, current_app, redirect, url_for
-from xivo_confd_client import Client as confd_client
+from xivo_confd_client.client import ConfdClient
 from forms import FormCTIPassword
 from contextlib import contextmanager
 from flask.ext.classy import FlaskView
+
 from xivo_webi.auth import verify_token
+from xivo_webi.auth import current_user
 
 logger = logging.getLogger(__name__)
 
 
 @contextmanager
-def new_confd_client(config):
-    yield confd_client(**config)
+def confd_client(config):
+    yield ConfdClient(**config)
 
 class CTIPassword(FlaskView):
     decorators = [verify_token]
@@ -39,14 +41,13 @@ class CTIPassword(FlaskView):
         return render_template('ctipassword.html',form=form)
 
     def post(self):
-        current_user.user_id = "TODO XXX"
         form=FormCTIPassword()
         if form.validate_on_submit():
-            user = dict(id=current_user.user_id,password=form.data['password'])
-            with new_confd_client(current_app.config['confd']) as confd:
+            user = dict(id=current_user.get_uuid(),password=form.data['password'])
+            with confd_client(current_app.config['confd']) as confd:
                 try:
                     confd.users.update(user)
-                    return redirect(url_for('ctipassword.index'))
+                    return redirect(url_for('q_ctipassword.CTIPassword:get'))
                 except:
                     print "Error to update user password"
         return render_template('ctipassword.html',form=form)

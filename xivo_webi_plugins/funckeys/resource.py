@@ -17,35 +17,34 @@
 
 import logging
 
-from flask import render_template, current_app
+from flask import render_template, current_app, request
 from flask.ext.classy import FlaskView
 from contextlib import contextmanager
 
-from xivo_confd_client import Client as confd_client
-from xivo_ctid_client import Client as ctid_client
+from xivo_confd_client.client import ConfdClient
+from xivo_ctid_client.client import CtidClient
 
 from xivo_webi.auth import verify_token
+from xivo_webi.auth import current_user
 
 logger = logging.getLogger(__name__)
 
 
 @contextmanager
-def new_confd_client(config):
-    current_app.config['confd']['token'] = request.cookies.get('x-auth-session')
-    yield confd_client(**config)
+def confd_client(config):
+    yield ConfdClient(**config)
 
 @contextmanager
-def new_ctid_client(config):
-    yield ctid_client(**config)
+def ctid_client(config):
+    yield CtidClient(**config)
 
 
 class FK(FlaskView):
     decorators = [verify_token]
 
     def index(self):
-        current_user.user_id = "TODO XXX"
-        with new_confd_client(current_app.config['confd']) as confd:
-            fk = gen_template_fk(confd, confd.users.relations(current_user.user_id).list_funckeys())
+        with confd_client(current_app.config['confd']) as confd:
+            fk = gen_template_fk(confd, confd.users.relations(current_user.get_id()).list_funckeys())
         return render_template('fk.html', fk=fk, ws=current_app.config['ws'])
 
 def gen_template_fk(confd, fk):
@@ -88,7 +87,7 @@ def get_line(confd, user_id):
     return line
 
 def get_endpoint_status(endpoint_id):
-    with new_ctid_client(current_app.config['ctid']) as cti:
+    with ctid_client(current_app.config['ctid']) as cti:
         endpoint_status = cti.endpoints.get(endpoint_id)
         return endpoint_status['status']
     return False

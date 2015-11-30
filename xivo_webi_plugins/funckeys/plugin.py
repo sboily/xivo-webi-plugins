@@ -26,3 +26,11 @@ class Plugin(object):
     def load(self, core):
         FK.register(q_fk, route_base='/x/fk', route_prefix='')
         core.register_blueprint(q_fk)
+        self.configure(core)
+
+    def configure(self, core):
+        core.config['ctid'] = dict()
+        core.config['ctid']['host'] = '192.168.1.124'
+
+        core.config['ws'] = dict()
+        core.config['ws']['host'] = '192.168.1.124'

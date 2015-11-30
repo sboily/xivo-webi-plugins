@@ -11,8 +11,8 @@
         var token = "{{ current_user.token }}";
     </script>
 
-    <script src="{{ url_for('fk.static', filename='js/sockjs.min.js') }}"></script>
-    <script src="{{ url_for('fk.static', filename='js/xivo.js') }}"></script>
+    <script src="{{ url_for('q_fk.static', filename='js/sockjs.min.js') }}"></script>
+    <script src="{{ url_for('q_fk.static', filename='js/xivo.js') }}"></script>
 {%- endblock -%}
 
 {%- block content -%}

@@ -27,6 +27,7 @@ setup(
             'ctipassword = xivo_webi_plugins.ctipassword.plugin:Plugin',
             'generalsip = xivo_webi_plugins.generalsip.plugin:Plugin',
             'login_user = xivo_webi_plugins.login_user.plugin:Plugin',
+            'bootstrap = xivo_webi_plugins.bootstrap.plugin:Plugin',
         ],
     }
 )

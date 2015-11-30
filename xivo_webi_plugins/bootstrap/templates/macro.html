@@ -1,0 +1,162 @@
+{% macro render_field(field) -%}
+  {% set with_label = kwargs.pop('with_label', False) %}
+  {% set with_icon = kwargs.pop('with_icon', False) %}
+  {% set placeholder = '' %}
+
+  {% if with_label %}
+    {% set placeholder = field.label.text %}
+  {% endif %}
+
+  <div class="form-group {% if field.errors %}has-error{% endif %}">
+    {% if not with_label %}
+      <label for="{{ field.id }}" class="control-label">
+        {{ field.label.text }}{% if field.flags.required %} *{% endif %}:
+      </label>
+    {% endif %}
+
+    {% if with_icon %}
+      <div class="input-group">
+        <span class="input-group-addon">
+        <i class="glyphicon glyphicon-{{ with_icon }}"></i></span>
+    {% endif %}
+
+    {% set class_ = kwargs.pop('class_', '') %}
+    {% if field.flags.required %}
+      {% set class_ = class_ + ' required' %}
+    {% endif %}
+
+    {% if field.type == 'BooleanField' %}
+      <div class="checkbox">
+        <label>
+          {{ field(class_ = class_, **kwargs) }}
+          {{ field.label.text|safe }}
+        </label>
+      </div>
+    {% elif field.type == 'RadioField' %}
+      {% for value, label, _ in field.iter_choices() %}
+        <div class="radio-inline">
+          <label>
+            <input type="radio" name="{{ field.id }}" id="{{ field.id }}" value="{{ value }}">
+            {{ label }}
+          </label>
+        </div>
+      {% endfor %}
+    {% else %}
+      {% if field.type in ('TextField', 'TextAreaField', 'PasswordField', 'EmailField', 'IntegerField') %}
+        {% set class_ = class_ + ' form-control' %}
+      {% endif %}
+
+      {% if field.type in ('SelectField', 'QuerySelectField', 'QuerySelectMultipleField') %}
+        {{ field(class_ = class_ + ' form-control', **kwargs) }}
+      {% else %}
+        {{ field(class_ = class_, placeholder=placeholder, **kwargs) }}
+      {% endif %}
+
+    {% endif %}
+
+    {% if field.errors %}
+      <span id="popover" data-toggle="popover" data-container="body" data-trigger="focus" 
+        title="{{ field.label.text }}" data-placement="bottom" data-content="{{ field.errors|join(', ') }}"></span>
+    {% endif %}
+
+    {% if field.description %}
+      <p class="help-block">{{ field.description|safe }}</p>
+    {% endif %}
+
+    {% if with_icon %}
+      </div>
+    {% endif %}
+  </div>
+
+{%- endmacro %}
+
+{% macro build_content_header(page_header, page_header_description, page_header_level) %}
+  <section class="content-header">
+    <h1>
+      {{ page_header }}
+      <small>{{ page_header_description }}</small>
+    </h1>
+    {% if page_header_level %}
+      <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        {% for level in page_header_level %}
+          <li class="active">{{ level }}</li>
+        {% endfor %}
+      </ol>
+    {% endif %}
+  </section>
+{% endmacro %}
+
+
+{% macro build_menu(current_user) %}
+  {% if current_user.is_authenticated() %}
+    {% for m in menu %}
+
+      {% for l in m.link %}
+        <li class="{% if m.link[l]['url'] == request.endpoint %}active{% endif %}">
+          <a href="{{ url_for(m.link[l]['url']) }}">
+            <i class="fa fa-{{ m.link[l]['icon'] }}"></i>
+            <span>{{ m.link[l]['name'] }}</span>
+          </a>
+        </li>
+      {% endfor %}
+
+      {% for d in m.dropdown %}
+        <li class="treeview {% if url_for(m.dropdown[d]['url']) in request.path %}active{% endif %}">
+            <a href="">
+              <i class="fa fa-{{ m.dropdown[d]['icon'] }}"></i><span>{{ m.dropdown[d]['name'] }}</span>
+              <i class="fa fa-angle-left pull-right"></i>
+            </a>
+        <ul class="treeview-menu">
+        {% for l in m.dropdown[d].link %}
+          <li {% if url_for(m.dropdown[d].link[l]['url']) == request.path %}class="active"{% endif %}>
+            <a href="{{ url_for(m.dropdown[d].link[l]['url']) }}">
+              <i class="fa fa-circle-o"></i>
+              {{ m.dropdown[d].link[l]['name'] }}
+            </a>
+          </li>
+        {% endfor %}
+        </ul>
+        </li>
+      {% endfor %}
+
+    {% endfor %}
+  {% endif %}
+{% endmacro %}
+
+
+{% macro build_top_menu(current_user) %}
+  {% if current_user.is_authenticated() %}
+    <ul class="nav navbar-nav">
+      {% for m in topmenu %}
+
+        {% for l in m.link %}
+          <li>
+            <a href="{{ url_for(m.link[l]['url']) }}">{{ m.link[l]['name'] }}</a>
+          </li>
+        {% endfor %}
+
+        {% if m.dropdown %}
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              {{ m.dropdown['name'] }}&nbsp;
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              {% for l in m.dropdown %}
+                {% if l != 'name' %}
+                  <li>
+                    <a href="{{ url_for(m.dropdown[l]['url']) }}">
+                    {{ m.dropdown[l]['name'] }}
+                    </a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </li>
+        {% endif %}
+
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}

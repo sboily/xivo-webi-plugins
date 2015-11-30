@@ -25,7 +25,8 @@ setup(
             'webihome = xivo_webi.plugins.home:Plugin',
             'fk = xivo_webi.plugins.funckeys:Plugin',
             'ctipassword = xivo_webi.plugins.ctipassword:Plugin',
-            #'generalsip = xivo_webi.plugins.generalsip:Plugin',
+            'generalsip = xivo_webi.plugins.generalsip:Plugin',
+            'login_user = xivo_webi.plugins.login_user:Plugin',
         ],
     }
 )

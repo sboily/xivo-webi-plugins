@@ -1,0 +1,22 @@
+{%- extends 'layout.html' -%}
+
+{%- block body -%}
+<body class="login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <a href="/"><b>{% if xivo_title %} {{ xivo_title }} {% else %} XiVO Admin {% endif %}</a>
+    </div>
+    <div class="login-box-body">
+      <p class="login-box-msg">Sign in to start your session</p>
+      <form role="form" method="post" action="{{ url_for('users.login') }}">
+          {{ render_field(form.username, with_icon="user") }}
+          {{ render_field(form.password, with_icon="lock") }}
+        <div class="form-group">
+          {{ form.csrf_token() }}
+          {{ form.submit(class="btn btn-primary btn-block btn-flat") }}
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+{%- endblock -%}

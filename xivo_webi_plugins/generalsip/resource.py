@@ -48,4 +48,4 @@ class GeneralSIP(FlaskView):
             if form.validate_on_submit():
                 form.populate_obj(sip)
                 generalsip_dao.edit(sip)
-        return redirect(url_for("generalsip:GeneralSIP:get"))
+        return redirect(url_for("q_generalsip.GeneralSIP:get"))

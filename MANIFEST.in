@@ -1,1 +1,1 @@
-recursive-include xivo_webi/plugins *.html *.yml *.js
+recursive-include xivo_webi_plugins/* *

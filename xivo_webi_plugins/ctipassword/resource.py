@@ -31,14 +31,14 @@ logger = logging.getLogger(__name__)
 def new_confd_client(config):
     yield confd_client(**config)
 
-class CTIPassword(FlaskView)
+class CTIPassword(FlaskView):
     decorators = [verify_token]
 
     def get(self):
         form=FormCTIPassword()
         return render_template('ctipassword.html',form=form)
 
-    def post(self)
+    def post(self):
         current_user.user_id = "TODO XXX"
         form=FormCTIPassword()
         if form.validate_on_submit():

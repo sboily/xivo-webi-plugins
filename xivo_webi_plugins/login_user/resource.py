@@ -24,6 +24,7 @@ from flask.ext.classy import FlaskView
 
 from xivo_auth_client import Client as client_auth
 from xivo_confd_client import Client as client_confd
+from xivo_webi.auth import verify_token
 
 from forms import LoginUserForm
 

@@ -24,6 +24,8 @@ from contextlib import contextmanager
 from xivo_confd_client import Client as confd_client
 from xivo_ctid_client import Client as ctid_client
 
+from xivo_webi.auth import verify_token
+
 logger = logging.getLogger(__name__)
 
 

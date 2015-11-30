@@ -20,7 +20,7 @@ import xivo_dao
 
 from .resource import GeneralSIP
 
-q_generalsip = Blueprint('q_generalsip', __name__, template_folder='templates'
+q_generalsip = Blueprint('q_generalsip', __name__, template_folder='templates',
                          static_folder='static', static_url_path='/%s' % __name__)
 
 class Plugin(object):

@@ -6,7 +6,7 @@ from setuptools import setup
 
 
 setup(
-    name='xivo_webi',
+    name='xivo_webi_plugins',
     version='0.1',
 
     description='XiVO webi',
@@ -22,11 +22,11 @@ setup(
 
     entry_points={
         'xivo_webi.plugins': [
-            'webihome = xivo_webi_plugins.home:Plugin',
-            'fk = xivo_webi_plugins.funckeys:Plugin',
-            'ctipassword = xivo_webi_plugins.ctipassword:Plugin',
-            'generalsip = xivo_webi_plugins.generalsip:Plugin',
-            'login_user = xivo_webi_plugins.login_user:Plugin',
+            'webihome = xivo_webi_plugins.home.plugin:Plugin',
+            'fk = xivo_webi_plugins.funckeys.plugin:Plugin',
+            'ctipassword = xivo_webi_plugins.ctipassword.plugin:Plugin',
+            'generalsip = xivo_webi_plugins.generalsip.plugin:Plugin',
+            'login_user = xivo_webi_plugins.login_user.plugin:Plugin',
         ],
     }
 )

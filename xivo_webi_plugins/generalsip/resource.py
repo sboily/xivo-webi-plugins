@@ -24,6 +24,7 @@ import models as generalsip_dao
 from forms import FormGeneralSIP
 
 from xivo_webi.auth import verify_token
+from xivo_dao.helpers.db_utils import session_scope
 
 logger = logging.getLogger(__name__)
 
@@ -32,14 +33,16 @@ class GeneralSIP(FlaskView):
     decorators = [verify_token]
 
     def get(self):
-        sip = generalsip_dao.list()
-        form = FormGeneralSIP(obj=sip)
-        return render_template('generalsip.html', form=form)
+        with session_scope():
+            sip = generalsip_dao.list()
+            form = FormGeneralSIP(obj=sip)
+            return render_template('generalsip.html', form=form)
 
     def post(self):
-        sip = generalsip_dao.list()
-        form = FormGeneralSIP(obj=sip)
-        if form.validate_on_submit():
-            form.populate_obj(sip)
-            generalsip_dao.edit(sip)
-        return redirect(url_for("generalsip.index"))
+        with session_scope():
+            sip = generalsip_dao.list()
+            form = FormGeneralSIP(obj=sip)
+            if form.validate_on_submit():
+                form.populate_obj(sip)
+                generalsip_dao.edit(sip)
+        return redirect(url_for("generalsip:GeneralSIP:get"))

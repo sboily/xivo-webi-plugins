@@ -1,4 +1,4 @@
-{% from "macro.html" import build_top_menu %}
+{% from "macro_user.html" import build_top_menu %}
 
 <header class="main-header">
   <a href="#" class="logo"><b>XiVO</b>-ADMIN</a>
@@ -12,12 +12,12 @@
         <ul class="nav navbar-nav">
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="{{ url_for('static', filename='img/user.jpg') }}" class="user-image" alt="User Image"/>
+              <img src="{{ url_for('q_bootstrap.static', filename='img/user.jpg') }}" class="user-image" alt="User Image"/>
               <span class="hidden-xs">{{ current_user.username }}</span>
             </a>
             <ul class="dropdown-menu">
               <li class="user-header">
-                <img src="{{ url_for('static', filename='img/user.jpg') }}" class="img-circle" alt="User Image" />
+                <img src="{{ url_for('q_bootstrap.static', filename='img/user.jpg') }}" class="img-circle" alt="User Image" />
                 <p>
                  {{ current_user.firstname }} {{ current_user.lastname }} - Admin
                  <small>Member since Nov. 2012</small>
@@ -28,7 +28,7 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="{{ url_for('users.logout') }}" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="{{ url_for('q_loginuser.LogoutUser:get') }}" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>

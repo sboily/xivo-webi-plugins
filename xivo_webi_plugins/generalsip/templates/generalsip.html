@@ -1,4 +1,4 @@
-{%- extends "layout.html" -%}
+{%- extends "layout_user.html" -%}
 
 {% set page_header="SIP" %}
 {% set page_header_description="General information about sip.conf in asterisk" %}
@@ -23,7 +23,7 @@
               <li role="presentation"><a href="#auth" aria-controls="auth" role="tab" data-toggle="tab">Auth. credentials</a></li>
             </ul>
 
-            <form role="form" method="post" action="{{ url_for('generalsip.index') }}">
+            <form role="form" method="post" action="{{ url_for('q_generalsip.GeneralSIP:post') }}">
               {{ form.csrf_token() }}
               <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="general">

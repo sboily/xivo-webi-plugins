@@ -89,7 +89,7 @@
 
 
 {% macro build_menu(current_user) %}
-  {% if current_user.is_authenticated() %}
+  {% if current_user.is_authenticated %}
     {% for m in menu %}
 
       {% for l in m.link %}
@@ -126,7 +126,7 @@
 
 
 {% macro build_top_menu(current_user) %}
-  {% if current_user.is_authenticated() %}
+  {% if current_user.is_authenticated %}
     <ul class="nav navbar-nav">
       {% for m in topmenu %}
 

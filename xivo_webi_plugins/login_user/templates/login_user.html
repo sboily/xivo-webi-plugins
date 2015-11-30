@@ -1,4 +1,4 @@
-{%- extends 'layout.html' -%}
+{%- extends 'layout_user.html' -%}
 
 {%- block body -%}
 <body class="login-page">
@@ -8,7 +8,7 @@
     </div>
     <div class="login-box-body">
       <p class="login-box-msg">Sign in to start your session</p>
-      <form role="form" method="post" action="{{ url_for('users.login') }}">
+      <form role="form" method="post" action="{{ url_for('q_loginuser.LoginUser:get') }}">
           {{ render_field(form.username, with_icon="user") }}
           {{ render_field(form.password, with_icon="lock") }}
         <div class="form-group">

@@ -52,8 +52,8 @@ class LoginUser(FlaskView):
         session = request.cookies.get("x-auth-session")
 
         if session:
-            return redirect(url_for('login_user.LoginUser:get'))
-        return render_template('login.html', form=form)
+            return redirect(url_for('q_loginuser.LoginUser:get'))
+        return render_template('login_user.html', form=form)
 
     def post(self):
         form = LoginUserForm()
@@ -65,7 +65,7 @@ class LoginUser(FlaskView):
             with xivo_auth(current_app.config['auth']) as auth:
                 token_data = auth.token.new('xivo_user', expiration=3600)
                 if not token_data:
-                    return redirect(url_for('login_user.LoginUser:get'))
+                    return redirect(url_for('q_loginuser.LoginUser:get'))
                 token = token_data['token']
 
             if token:
@@ -74,7 +74,7 @@ class LoginUser(FlaskView):
                 response.set_cookie('x-auth-session', token)
 
                 return response
-        return render_template('login.html', form=form)
+        return render_template('login_user.html', form=form)
 
 
 class LogoutUser(FlaskView):
@@ -87,7 +87,7 @@ class LogoutUser(FlaskView):
             with xivo_auth(current_app.config['auth']) as auth:
                 auth.token.revoke(session)
 
-        response = redirect(url_for('login_user.LoginUser:get'))
+        response = redirect(url_for('q_loginuser.LoginUser:get'))
         response.set_cookie('x-auth-session', '', expires=0)
 
         return response

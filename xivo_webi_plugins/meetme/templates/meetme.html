@@ -1,0 +1,41 @@
+{%- extends "list.html" -%}
+
+{% set form_nb_column = 4 %}
+
+{% block toolbar %}
+  <a href="{{ url_for('meetme.MeetmeAdd:get') }}" title="Add">
+    <img src="{{ url_for('static', filename='img/menu/top/toolbar/bt-add.gif') }}" id="toolbar-bt-add" alt="Add" border="0">
+  </a>
+{% endblock %}
+
+{% block list_title %}
+  <th class="th-center"><span class="title">Name</span></th>
+  <th class="th-center"><span class="title">Number</span></th>
+  <th class="th-center"><span class="title">PIN code</span></th>
+  <th class="th-center col-action">Action</th>
+{% endblock %}
+
+{% block list %}
+  {% for m in meetme %}
+    <tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';" onmouseout="this.className = this.tmp;" class="sb-content l-infos-1on2">
+      <td class="td-left"><input name="" id="" class="it-checkbox" value="2" type="checkbox"></td>
+      <td class="txt-left col_name"><label for="" id="">
+        <img src="{{ url_for('static', filename='img/site/flag/enable.gif') }}" class="icons-list" alt="">{{ m.name }}</label>
+      </td>
+      <td class="txt-left col_number">
+        <label for="" id="">{{ m.confno }}</label>
+      </td>
+      <td class="txt-left col_pin_code">
+        <label for="" id="">-</label>
+      </td>
+      <td class="td-right col_actions" colspan="2">
+        <a href="{{ m.id }}" title="Edit">
+          <img src="{{ url_for('static', filename='img/site/button/edit.gif') }}" alt="Edit" border="0">
+        </a>
+        <a href="{{ url_for('meetme.MeetmeDelete:get', id=m.id) }}" title="Delete">
+          <img src="{{ url_for('static', filename='img/site/button/delete.gif') }}" alt="Delete" border="0">
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+{% endblock %}

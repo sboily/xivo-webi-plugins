@@ -1,0 +1,48 @@
+{%- extends "layout.html" -%}
+
+{% set page_header="FK" %}
+{% set page_header_description="List function keys" %}
+{% set page_header_level=("fk",) %}
+
+{%- block additional_js -%}
+
+    <script>
+        var bus_host = "http://{{ ws.host }}:{{ ws.port }}/ws/bus";
+        var token = "{{ current_user.token }}";
+    </script>
+
+    <script src="{{ url_for('fk.static', filename='js/sockjs.min.js') }}"></script>
+    <script src="{{ url_for('fk.static', filename='js/xivo.js') }}"></script>
+{%- endblock -%}
+
+{%- block content -%}
+  <section class="content">
+    <div class="row">
+      <div class="col-md-2">
+        {% for f in fk %}
+          <div class="box 
+            {% if fk[f]['endpoint_status'] == 0 %}
+              box-success
+            {% elif fk[f]['endpoint_status'] == 1 %}
+              box-danger
+            {% elif fk[f]['endpoint_status'] == 4 %}
+              box-danger
+            {% else %}
+              box-warning
+            {% endif %}
+            " data-line="{{ fk[f]['line'] }}">
+            <div class="box-body text-center">
+              {% if fk[f]['label'] %}
+                  {{ fk[f]['label'] }}
+              {% else %}
+                  {{ fk[f]['destination'] }}
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+{%- endblock -%}
+

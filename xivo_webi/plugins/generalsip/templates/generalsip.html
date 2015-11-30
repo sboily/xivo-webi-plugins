@@ -1,0 +1,202 @@
+{%- extends "layout.html" -%}
+
+{% set page_header="SIP" %}
+{% set page_header_description="General information about sip.conf in asterisk" %}
+{% set page_header_level=("general sip",) %}
+
+{%- block content -%}
+  <section class="content">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="box box-primary">
+          <div class="box-body">
+            <ul class="nav nav-tabs" role="tablist" id="myTab">
+              <li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab">General</a></li>
+              <li role="presentation"><a href="#network" aria-controls="network" role="tab" data-toggle="tab">Network</a></li>
+              <li role="presentation"><a href="#security" aria-controls="security" role="tab" data-toggle="tab">Security</a></li>
+              <li role="presentation"><a href="#signaling" aria-controls="signaling" role="tab" data-toggle="tab">Signaling</a></li>
+              <li role="presentation"><a href="#t38" aria-controls="t38" role="tab" data-toggle="tab">T38</a></li>
+              <li role="presentation"><a href="#jitterbuffer" aria-controls="jitterbuffer" role="tab" data-toggle="tab">Jitter Buffer</a></li>
+              <li role="presentation"><a href="#default" aria-controls="default" role="tab" data-toggle="tab">Default</a></li>
+              <li role="presentation"><a href="#realtime" aria-controls="realtime" role="tab" data-toggle="tab">Real time</a></li>
+              <li role="presentation"><a href="#internals" aria-controls="internals" role="tab" data-toggle="tab">Internals</a></li>
+              <li role="presentation"><a href="#auth" aria-controls="auth" role="tab" data-toggle="tab">Auth. credentials</a></li>
+            </ul>
+
+            <form role="form" method="post" action="{{ url_for('generalsip.index') }}">
+              {{ form.csrf_token() }}
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="general">
+	          {{ render_field(form.bindport) }}
+	          {{ render_field(form.udpbindaddr) }}
+	          {{ render_field(form.tcpenable) }}
+	          {{ render_field(form.tcpbindaddr) }}
+	          {{ render_field(form.autocreatepeer) }}
+	          {{ render_field(form.allowguest) }}
+	          {{ render_field(form.allowsubscribe) }}
+	          {{ render_field(form.allowoverlap) }}
+	          {{ render_field(form.match_auth_username) }}
+	          {{ render_field(form.promiscredir) }}
+	          {{ render_field(form.autodomain) }}
+	          {{ render_field(form.domain) }}
+	          {{ render_field(form.domainsasrealm) }}
+	          {{ render_field(form.allowexternaldomains) }}
+	          {{ render_field(form.usereqphone) }}
+	          {{ render_field(form.realm) }}
+	          {{ render_field(form.alwaysauthreject) }}
+	          {{ render_field(form.useragent) }}
+	          {{ render_field(form.buggymwi) }}
+	          {{ render_field(form.regcontext) }}
+	          {{ render_field(form.regextenonqualify) }}
+	          {{ render_field(form.callerid) }}
+	          {{ render_field(form.fromdomain) }}
+	          {{ render_field(form.sipdebug) }}
+	          {{ render_field(form.dumphistory) }}
+	          {{ render_field(form.recordhistory) }}
+	          {{ render_field(form.authfailureevents) }}
+	          {{ render_field(form.callevents) }}
+	          {{ render_field(form.tos_sip) }}
+	          {{ render_field(form.tos_audio) }}
+	          {{ render_field(form.tos_video) }}
+	          {{ render_field(form.tos_text) }}
+	          {{ render_field(form.cos_sip) }}
+	          {{ render_field(form.cos_audio) }}
+	          {{ render_field(form.cos_video) }}
+	          {{ render_field(form.cos_text) }}
+
+
+
+                </div>
+                <div role="tabpanel" class="tab-pane" id="network">
+	          {{ render_field(form.externip) }}
+	          {{ render_field(form.externhost) }}
+	          {{ render_field(form.transport) }}
+	          {{ render_field(form.externtcpport) }}
+	          {{ render_field(form.externtlsport) }}
+	          {{ render_field(form.stunaddr) }}
+	          {{ render_field(form.externrefresh) }}
+	          {{ render_field(form.matchexterniplocally) }}
+	          {{ render_field(form.dynamic_exclude_static) }}
+	          {{ render_field(form.contactdeny) }}
+	          {{ render_field(form.contactpermit) }}
+	          {{ render_field(form.outboundproxy) }}
+	          {{ render_field(form.localnet) }}
+                </div>
+                <div role="tabpanel" class="tab-pane" id="security">
+	          {{ render_field(form.tlsenable) }}
+	          {{ render_field(form.tlsbindaddr) }}
+	          {{ render_field(form.tlscertfile) }}
+	          {{ render_field(form.tlscafile) }}
+	          {{ render_field(form.tlsdontverifyserver) }}
+	          {{ render_field(form.tlscipher) }}
+	          {{ render_field(form.encryption) }}
+                </div>
+                <div role="tabpanel" class="tab-pane" id="signaling">
+	          {{ render_field(form.t1min) }}
+	          {{ render_field(form.timert1) }}
+	          {{ render_field(form.timerb) }}
+	          {{ render_field(form.relaxdtmf) }}
+	          {{ render_field(form.rfc2833compensate) }}
+	          {{ render_field(form.compactheaders) }}
+	          {{ render_field(form.rtptimeout) }}
+	          {{ render_field(form.rtpholdtimeout) }}
+	          {{ render_field(form.rtpkeepalive) }}
+	          {{ render_field(form.directrtpsetup) }}
+	          {{ render_field(form.notifymimetype) }}
+	          {{ render_field(form.srvlookup) }}
+	          {{ render_field(form.pedantic) }}
+	          {{ render_field(form.minexpiry) }}
+	          {{ render_field(form.maxexpiry) }}
+	          {{ render_field(form.defaultexpiry) }}
+	          {{ render_field(form.registertimeout) }}
+	          {{ render_field(form.registerattempts) }}
+	          {{ render_field(form.mwiexpiry) }}
+	          {{ render_field(form.notifyringing) }}
+	          {{ render_field(form.notifyhold) }}
+	          {{ render_field(form.notifycid) }}
+	          {{ render_field(form.callcounter) }}
+	          {{ render_field(form.allowtransfer) }}
+	          {{ render_field(form.maxcallbitrate) }}
+	          {{ render_field(form.autoframing) }}
+	          {{ render_field(form.prematuremedia) }}
+	          {{ render_field(form.sdpsession) }}
+	          {{ render_field(form.sdpowner) }}
+	          {{ render_field(form.media_address) }}
+	          {{ render_field(form.ignoresdpversion) }}
+	          {{ render_field(form.shrinkcallerid) }}
+	          {{ render_field(form.session_timers) }}
+	          {{ render_field(form.session_expires) }}
+	          {{ render_field(form.session_minse) }}
+	          {{ render_field(form.session_refresher) }}
+	          {{ render_field(form.use_q850_reason) }}
+	          {{ render_field(form.snom_aoc_enabled) }}
+	          {{ render_field(form.subscribe_network_change_event) }}
+	          {{ render_field(form.maxforwards) }}
+	          {{ render_field(form.disallowed_methods) }}
+	          {{ render_field(form.auth_options_requests) }}
+	          {{ render_field(form.g726nonstandard) }}
+	          {{ render_field(form.disallow) }}
+	          {{ render_field(form.allow) }}
+                </div>
+                <div role="tabpanel" class="tab-pane" id="t38">
+	          {{ render_field(form.t38pt_udptl) }}
+	          {{ render_field(form.t38pt_usertpsource) }}
+                </div>
+                <div role="tabpanel" class="tab-pane" id="jitterbuffer">
+	          {{ render_field(form.jbenable) }}
+	          {{ render_field(form.jbforce) }}
+	          {{ render_field(form.jbmaxsize) }}
+	          {{ render_field(form.jbresyncthreshold) }}
+	          {{ render_field(form.jbimpl) }}
+	          {{ render_field(form.jblog) }}
+	          {{ render_field(form.jbtargetextra) }}
+                </div>
+                <div role="tabpanel" class="tab-pane" id="default">
+	          {{ render_field(form.context) }}
+	          {{ render_field(form.nat) }}
+	          {{ render_field(form.dtmfmode) }}
+	          {{ render_field(form.qualify) }}
+	          {{ render_field(form.qualifyfreq) }}
+	          {{ render_field(form.qualifygap) }}
+	          {{ render_field(form.qualifypeers) }}
+	          {{ render_field(form.useclientcode) }}
+	          {{ render_field(form.progressinband) }}
+	          {{ render_field(form.language) }}
+	          {{ render_field(form.mohinterpret) }}
+	          {{ render_field(form.mohsuggest) }}
+	          {{ render_field(form.vmexten) }}
+	          {{ render_field(form.trustrpid) }}
+	          {{ render_field(form.sendrpid) }}
+	          {{ render_field(form.directmedia) }}
+	          {{ render_field(form.insecure) }}
+	          {{ render_field(form.textsupport) }}
+	          {{ render_field(form.videosupport) }}
+                </div>
+                <div role="tabpanel" class="tab-pane" id="realtime">
+	          {{ render_field(form.rtcachefriends) }}
+	          {{ render_field(form.rtupdate) }}
+	          {{ render_field(form.ignoreregexpire) }}
+	          {{ render_field(form.rtsavesysname) }}
+	          {{ render_field(form.rtautoclear) }}
+                </div>
+                <div role="tabpanel" class="tab-pane" id="internals">
+	          {{ render_field(form.hash_users) }}
+	          {{ render_field(form.hash_peers) }}
+	          {{ render_field(form.hash_dialogs) }}
+                </div>
+                <div role="tabpanel" class="tab-pane" id="auth">
+                </div>
+              </div>
+              <div class="box-footer">
+                {{ render_field(form.submit, class="btn btn-primary") }}
+              </div>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{%- endblock -%}
+

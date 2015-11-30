@@ -22,11 +22,11 @@ setup(
 
     entry_points={
         'xivo_webi.plugins': [
-            'webihome = xivo_webi.plugins.home:Plugin',
-            'fk = xivo_webi.plugins.funckeys:Plugin',
-            'ctipassword = xivo_webi.plugins.ctipassword:Plugin',
-            'generalsip = xivo_webi.plugins.generalsip:Plugin',
-            'login_user = xivo_webi.plugins.login_user:Plugin',
+            'webihome = xivo_webi_plugins.home:Plugin',
+            'fk = xivo_webi_plugins.funckeys:Plugin',
+            'ctipassword = xivo_webi_plugins.ctipassword:Plugin',
+            'generalsip = xivo_webi_plugins.generalsip:Plugin',
+            'login_user = xivo_webi_plugins.login_user:Plugin',
         ],
     }
 )

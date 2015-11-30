@@ -23,6 +23,7 @@ from flask.ext.menu.classy import classy_menu_item
 
 import models as generalsip_dao
 from forms import FormGeneralSIP
+from utils import convertToSIPToDict
 
 from xivo_webi.auth import verify_token
 from xivo_dao.helpers.db_utils import session_scope
@@ -36,7 +37,7 @@ class GeneralSIP(FlaskView):
     @classy_menu_item('q_generalsip', 'SIP', order=0)
     def get(self):
         with session_scope():
-            sip = generalsip_dao.list()
+            sip = convertToSIPToDict(generalsip_dao.list())
             form = FormGeneralSIP(obj=sip)
             return render_template('generalsip.html', form=form)
 

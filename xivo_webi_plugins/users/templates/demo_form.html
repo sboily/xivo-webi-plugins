@@ -1,0 +1,48 @@
+{% extends "form.html" %}
+
+{% block form_title %}
+  <span class="span-center">Demo User</span>
+{% endblock %}
+
+{% block form_submenu %}
+  <ul>
+    <li id="dwsm-tab-1" class="dwsm-select" onclick="dwho_submenu.select(this,'sb-part-first');" onmouseout="dwho_submenu.blur(this);" onmouseover="dwho_submenu.focus(this);">
+     <div class="tab">
+       <span class="span-center"><a href="#first">General</a></span>
+     </div>
+     <span class="span-right">&nbsp;</span>
+    </li>
+    <li id="dwsm-tab-2" class="dwsm-blur" onclick="dwho_submenu.select(this,'sb-part-lines');" onmouseout="dwho_submenu.blur(this);" onmouseover="dwho_submenu.focus(this);">
+      <div class="tab">
+       <span class="span-center">
+       <a href="#lines">Lines</a></span>
+      </div>
+      <span class="span-right">&nbsp;</span>
+    </li>
+  </ul>
+{% endblock %}
+
+{% block form %}
+  <form action="" method="post" accept-charset="utf-8">
+    {{ form.csrf_token }}
+    <div style="display: block;" id="sb-part-first" class="b-nodisplay">
+      <p id="fd-userfeatures-firstname" class="fm-paragraph">
+        <span class="fm-desc clearboth"><label id="lb-userfeatures-firstname" for="it-userfeatures-firstname">{{ form.firstname.label.text }}:</label></span>
+        {{ form.firstname }}
+      </p>
+      <p id="fd-userfeatures-lastname" class="fm-paragraph">
+         <span class="fm-desc clearboth"><label id="lb-userfeatures-lastname" for="it-userfeatures-lastname">{{ form.lastname.label.text }}:</label></span>
+         {{ form.lastname }}
+      </p>
+      <div class="fm-paragraph fm-description">
+        <p>
+          <label id="lb-userfeatures-description" for="it-userfeatures-description">{{ form.description.label.text }}:</label> {{ form.description.value }}
+        </p>
+        {{ form.description }}
+      </div>
+    </div>
+    <p class="fm-paragraph-submit">
+      <input name="submit" id="submit" class="itb-submit" value="Save" type="submit">
+    </p>
+  </form>
+{% endblock %}

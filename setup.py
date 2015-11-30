@@ -29,6 +29,7 @@ setup(
             'login_user = xivo_webi_plugins.login_user.plugin:Plugin',
             'bootstrap = xivo_webi_plugins.bootstrap.plugin:Plugin',
             'meetme = xivo_webi_plugins.meetme.plugin:Plugin',
+            'users = xivo_webi_plugins.users.plugin:Plugin',
         ],
     }
 )

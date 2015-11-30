@@ -26,6 +26,8 @@ from flask.ext.classy import FlaskView
 from xivo_webi.auth import verify_token
 from xivo_webi.auth import current_user
 
+from flask_menu.classy import classy_menu_item
+
 logger = logging.getLogger(__name__)
 
 
@@ -36,6 +38,7 @@ def confd_client(config):
 class CTIPassword(FlaskView):
     decorators = [verify_token]
 
+    @classy_menu_item('q_ctipassword', 'CTIPASS', order=0)
     def get(self):
         form=FormCTIPassword()
         return render_template('ctipassword.html',form=form)

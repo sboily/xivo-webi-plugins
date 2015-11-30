@@ -16,6 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 from flask import Blueprint
+from flask_menu.classy import register_flaskview
+
 from .resource import CTIPassword
 
 q_ctipassword = Blueprint('q_ctipassword', __name__, template_folder='templates')
@@ -24,4 +26,5 @@ class Plugin(object):
 
     def load(self, core):
         CTIPassword.register(q_ctipassword, route_base='/x/ctipassword', route_prefix='')
+        register_flaskview(q_ctipassword, CTIPassword)
         core.register_blueprint(q_ctipassword)

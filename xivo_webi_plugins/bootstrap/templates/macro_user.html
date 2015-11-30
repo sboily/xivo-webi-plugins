@@ -88,38 +88,20 @@
 {% endmacro %}
 
 
-{% macro build_menu(current_user) %}
+{% macro build_menu(current_user, current_menu) %}
   {% if current_user.is_authenticated %}
-    {% for m in menu %}
-
-      {% for l in m.link %}
-        <li class="{% if m.link[l]['url'] == request.endpoint %}active{% endif %}">
-          <a href="{{ url_for(m.link[l]['url']) }}">
-            <i class="fa fa-{{ m.link[l]['icon'] }}"></i>
-            <span>{{ m.link[l]['name'] }}</span>
-          </a>
-        </li>
-      {% endfor %}
-
-      {% for d in m.dropdown %}
-        <li class="treeview {% if url_for(m.dropdown[d]['url']) in request.path %}active{% endif %}">
-            <a href="">
-              <i class="fa fa-{{ m.dropdown[d]['icon'] }}"></i><span>{{ m.dropdown[d]['name'] }}</span>
-              <i class="fa fa-angle-left pull-right"></i>
-            </a>
-        <ul class="treeview-menu">
-        {% for l in m.dropdown[d].link %}
-          <li {% if url_for(m.dropdown[d].link[l]['url']) == request.path %}class="active"{% endif %}>
-            <a href="{{ url_for(m.dropdown[d].link[l]['url']) }}">
-              <i class="fa fa-circle-o"></i>
-              {{ m.dropdown[d].link[l]['name'] }}
-            </a>
-          </li>
-        {% endfor %}
-        </ul>
-        </li>
-      {% endfor %}
-
+    {% for item in current_menu.children recursive %}
+      <li class="{% if item.active %}active{% endif %}">
+        <a href="{{ item.url }}">
+          <i class="fa fa-windows"></i>
+          <span>{{ item.text }}</span>
+        </a>
+        {% if item.children %}
+          <ul>
+            {{ loop(item.children) }}
+          <ul>
+        {% endif %}
+      </li>
     {% endfor %}
   {% endif %}
 {% endmacro %}

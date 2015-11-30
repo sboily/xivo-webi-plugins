@@ -15,8 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
-from flask import Blueprint
 import xivo_dao
+from flask import Blueprint
+from flask_menu.classy import register_flaskview
 
 from .resource import GeneralSIP
 
@@ -28,4 +29,5 @@ class Plugin(object):
     def load(self, core):
         xivo_dao.init_db_from_config(core.config)
         GeneralSIP.register(q_generalsip, route_base='/x/generalsip', route_prefix='')
+        register_flaskview(q_generalsip, GeneralSIP)
         core.register_blueprint(q_generalsip)

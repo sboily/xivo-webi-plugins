@@ -19,6 +19,7 @@ import logging
 
 from flask import render_template, redirect, url_for
 from flask.ext.classy import FlaskView
+from flask.ext.menu.classy import classy_menu_item
 
 import models as generalsip_dao
 from forms import FormGeneralSIP
@@ -32,6 +33,7 @@ logger = logging.getLogger(__name__)
 class GeneralSIP(FlaskView):
     decorators = [verify_token]
 
+    @classy_menu_item('q_generalsip', 'SIP', order=0)
     def get(self):
         with session_scope():
             sip = generalsip_dao.list()

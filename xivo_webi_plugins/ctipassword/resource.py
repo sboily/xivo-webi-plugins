@@ -38,7 +38,8 @@ def confd_client(config):
 class CTIPassword(FlaskView):
     decorators = [verify_token]
 
-    @classy_menu_item('q_ctipassword', 'CTIPASS', order=0)
+    @classy_menu_item('.ctipassword', 'CTI', order=0)
+    @classy_menu_item('.ctipassword.change', 'Change Password', order=0)
     def get(self):
         form=FormCTIPassword()
         return render_template('ctipassword.html',form=form)

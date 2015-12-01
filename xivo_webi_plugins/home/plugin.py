@@ -16,6 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 from flask import Blueprint
+from flask_menu.classy import register_flaskview
+
 from .resource import Index
 
 q_index = Blueprint('q_index', __name__, template_folder='templates')
@@ -24,4 +26,5 @@ class Plugin(object):
 
     def load(self, core):
         Index.register(q_index, route_base='/x/users', route_prefix='')
+        register_flaskview(q_index, Index)
         core.register_blueprint(q_index)

@@ -92,14 +92,28 @@
   {% if current_user.is_authenticated %}
     {% for item in current_menu.children recursive %}
       <li class="{% if item.active %}active{% endif %}">
-        <a href="{{ item.url }}">
-          <i class="fa fa-windows"></i>
-          <span>{{ item.text }}</span>
-        </a>
         {% if item.children %}
-          <ul>
-            {{ loop(item.children) }}
-          <ul>
+          <li class="treeview {% if item.active %}active{% endif %}">
+            <a href="">
+              <i class="fa fa-windows"></i><span>{{ item.text }}</span>
+              <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+            {% for i in item.children %}
+              <li {% if i.active %}class="active"{% endif %}>
+                <a href="{{ i.url }}">
+                  <i class="fa fa-circle-o"></i>
+                  {{ i.text }}
+                </a>
+              </li>
+            {% endfor %}
+            </ul>
+          </li>
+        {% else %}
+          <a href="{{ item.url }}">
+            <i class="fa fa-windows"></i>
+            <span>{{ item.text }}</span>
+          </a>
         {% endif %}
       </li>
     {% endfor %}

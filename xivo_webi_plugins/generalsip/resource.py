@@ -34,7 +34,8 @@ logger = logging.getLogger(__name__)
 class GeneralSIP(FlaskView):
     decorators = [verify_token]
 
-    @classy_menu_item('q_generalsip', 'SIP', order=0)
+    @classy_menu_item('.general', 'General', order=0)
+    @classy_menu_item('general.generalsip', 'SIP', order=0)
     def get(self):
         with session_scope():
             sip = convertToSIPToDict(generalsip_dao.list())

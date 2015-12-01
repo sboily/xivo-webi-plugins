@@ -18,6 +18,8 @@
 import logging
 from flask import render_template
 from flask.ext.classy import FlaskView
+from flask_menu.classy import classy_menu_item
+
 from xivo_webi.auth import verify_token
 
 logger = logging.getLogger(__name__)
@@ -26,5 +28,6 @@ logger = logging.getLogger(__name__)
 class Index(FlaskView):
     decorators = [verify_token]
 
+    @classy_menu_item('.main', 'Home', order=0)
     def index(self):
         return render_template('index_user.html')

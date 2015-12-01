@@ -19,6 +19,7 @@ import logging
 
 from flask import render_template, current_app, request
 from flask.ext.classy import FlaskView
+from flask.ext.menu.classy import classy_menu_item
 from contextlib import contextmanager
 
 from xivo_confd_client.client import ConfdClient
@@ -42,6 +43,8 @@ def ctid_client(config):
 class FK(FlaskView):
     decorators = [verify_token]
 
+    @classy_menu_item('.user', 'User', order=0)
+    @classy_menu_item('user.fk', 'My FK', order=0)
     def index(self):
         with confd_client(current_app.config['confd']) as confd:
             fk = gen_template_fk(confd, confd.users.relations(get_id(confd, current_user.get_uuid())).list_funckeys())

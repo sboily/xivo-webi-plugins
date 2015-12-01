@@ -16,6 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 from flask import Blueprint
+from flask.ext.menu.classy import register_flaskview
+
 from .resource import FK
 
 q_fk = Blueprint('q_fk', __name__, template_folder='templates',
@@ -25,6 +27,7 @@ class Plugin(object):
 
     def load(self, core):
         FK.register(q_fk, route_base='/x/fk', route_prefix='')
+        register_flaskview(q_fk, FK)
         core.register_blueprint(q_fk)
         self.configure(core)
 

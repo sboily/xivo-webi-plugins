@@ -1,11 +1,10 @@
 {%- extends "layout_user.html" -%}
 
 {%- block additional_js -%}
-  <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <script src="http://cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js"></script>
-  <script src="https://raw.githubusercontent.com/jmesnil/stomp-websocket/master/lib/stomp.min.js"></script>
-  <script src="http://jpillora.com/jquery.rest/dist/1/jquery.rest.min.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="//cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js"></script>
+  <script src="//raw.githubusercontent.com/jmesnil/stomp-websocket/master/lib/stomp.min.js"></script>
+  <script src="//jpillora.com/jquery.rest/dist/1/jquery.rest.min.js"></script>
   <script src="{{ url_for('q_agentd.static', filename='js/jquery.gridly.js') }}"></script>
   <script src="{{ url_for('q_agentd.static', filename='js/xivo.js') }}"></script>
 {%- endblock -%}
@@ -18,7 +17,18 @@
 
 {%- block content -%}
   <section class="content">
-    <div class="gridly example"></div>
+    <div class="gridly example">
+      {% for agent in agents %}
+        <div id="{{ agent.id }}" class="brick small">
+        <p id="number">Agent: {{ agent.number }}</p>
+        <p id="status">Logged: {{ agent.logged }}</p>
+        <p id="action" class="log">
+          <a href="#">log</a>
+        </p>
+        </div>
+      {% endfor %}
+    </div>
+
     <div id="dialog-form" title="Login agent">
       <p class="validateTips">All form fields are required.</p>
       <form>
@@ -33,4 +43,3 @@
     </div>
   </section>
 {%- endblock -%}
-

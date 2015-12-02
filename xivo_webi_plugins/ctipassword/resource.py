@@ -50,6 +50,7 @@ class CTIPassword(FlaskView):
         form=FormCTIPassword()
         if form.validate_on_submit():
             user = dict(id=current_user.get_uuid(),password=form.data['password'])
+            current_app.config['confd']['token'] = current_app.config['service_token']
             with confd_client(current_app.config['confd']) as confd:
                 try:
                     confd.users.update(user)

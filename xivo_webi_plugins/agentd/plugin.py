@@ -29,3 +29,9 @@ class Plugin(object):
         Agentd.register(q_agentd, route_base='/x/agentd', route_prefix='')
         register_flaskview(q_agentd, Agentd)
         core.register_blueprint(q_agentd)
+        self.configure_agentd(core)
+
+    def configure_agentd(self, core):
+        core.config['agentd'] = dict()
+        core.config['agentd']['host'] = "192.168.32.80"
+        core.config['agentd']['verify_certificate'] = False

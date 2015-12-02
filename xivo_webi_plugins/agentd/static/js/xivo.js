@@ -1,7 +1,6 @@
 var bus_username = "xivo";
 var bus_password = "xivo";
-var bus_host = "http://192.168.32.244:15674/stomp";
-var agentd_host = "http://192.168.32.244:9493";
+var bus_host = "http://192.168.32.80:15674/stomp";
 
 var ws = new SockJS(bus_host);
 var client = Stomp.over(ws);
@@ -20,24 +19,6 @@ var on_connect = function(x) {
 
 var on_error =  function() {
     console.log('error');
-};
-
-var draw_box = function(e) {
-    $("<div id=" + e.id + "></div>").appendTo(".gridly")
-                                    .addClass("brick small");
-    box = "<p id='number'>Agent: " + e.number + "</p>" +
-          "<p id='status'>Logged: " + e.logged + "</p>";
-
-    if (is_logged(e.logged))
-        box = box + append_unlog_action(box);
-    else
-        box = box + append_log_action(box);
-
-    $("#" + e.id).html(box);
-
-    $('.gridly').gridly({
-      columns: 12
-    });
 };
 
 var append_unlog_action = function() {
@@ -72,7 +53,7 @@ var events_agent_status = function(e) {
 };
 
 var unlog = function(id) {
-    var client = new $.RestClient(agentd_host + "/1.0/agents/");
+    //var client = new $.RestClient(agentd_host + "/1.0/agents/");
 
     client.add("by-id");
     client["by-id"].add("logoff", { stripTrailingSlash: true });
@@ -80,7 +61,7 @@ var unlog = function(id) {
 };
 
 var log = function(id) {
-    var client = new $.RestClient(agentd_host + "/1.0/agents/");
+    //var client = new $.RestClient(agentd_host + "/1.0/agents/");
 
     dialog.dialog("close");
     data = {context: $(context).val() , extension:  $(extension).val() };
@@ -91,17 +72,6 @@ var log = function(id) {
     client["by-id"].login.create(id, data);
 };
 
-var get_agents = function() {
-    var client = new $.RestClient(agentd_host + "/1.0/");
-
-    client.add("agents", { stripTrailingSlash: true });
-    client.agents.read().done(function(data) {
-      $(data).each(function(d) {
-        draw_box(data[d]);
-      });
-    });
-}
-
 var get_context_extension = function() {
     dialog.dialog("open");
 }
@@ -110,7 +80,6 @@ client.debug = function(e) {};
 
 $(function() {
     client.connect(bus_username, bus_password, on_connect, on_error, '/');
-    get_agents();
     $(document).on("click", "a" , function() {
         id = ($(this).parent().parent().attr('id'));
         action = $(this).parent().attr('class');

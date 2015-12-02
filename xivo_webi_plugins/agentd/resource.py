@@ -18,7 +18,7 @@
 import logging
 
 from flask import render_template, current_app, redirect, url_for
-from xivo_confd_client.client import ConfdClient
+from xivo_agentd_client.client import AgentdClient
 from contextlib import contextmanager
 from flask.ext.classy import FlaskView
 
@@ -28,18 +28,25 @@ from xivo_webi.auth import get_service_token
 
 from flask_menu.classy import classy_menu_item
 
+from forms import FormAgentd
+
 logger = logging.getLogger(__name__)
 
 
 @contextmanager
-def confd_client(config):
-    yield ConfdClient(**config)
+def agentd_client(config):
+    yield AgentdClient(**config)
 
 class Agentd(FlaskView):
     decorators = [verify_token]
 
-    @classy_menu_item('.agentd', 'CTI', order=0)
+    @classy_menu_item('.agentd', 'Agentd', order=0)
     @classy_menu_item('.agentd.panel', 'Dashboard', order=0)
+    @get_service_token
     def get(self):
-        form=FormCTIPassword()
-        return render_template('agentd.html',form=form)
+        form=FormAgentd()
+        current_app.config['agentd']['token'] = current_app.config['service_token']
+        with agentd_client(current_app.config['agentd']) as agentd:
+            agents = agentd.agents.get_agent_statuses()
+        print agents
+        return render_template('agentd.html',form=form, agents=agents)

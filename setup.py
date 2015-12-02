@@ -30,6 +30,7 @@ setup(
             'bootstrap = xivo_webi_plugins.bootstrap.plugin:Plugin',
             'meetme = xivo_webi_plugins.meetme.plugin:Plugin',
             'users = xivo_webi_plugins.users.plugin:Plugin',
+            'agentd = xivo_webi_plugins.agentd.plugin:Plugin',
         ],
     }
 )

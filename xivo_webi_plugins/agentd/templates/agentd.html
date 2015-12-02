@@ -1,0 +1,36 @@
+{%- extends "layout_user.html" -%}
+
+{%- block additional_js -%}
+  <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="http://cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js"></script>
+  <script src="https://raw.githubusercontent.com/jmesnil/stomp-websocket/master/lib/stomp.min.js"></script>
+  <script src="http://jpillora.com/jquery.rest/dist/1/jquery.rest.min.js"></script>
+  <script src="{{ url_for('q_agentd.static', filename='js/jquery.gridly.js') }}"></script>
+  <script src="{{ url_for('q_agentd.static', filename='js/xivo.js') }}"></script>
+{%- endblock -%}
+
+{%- block additional_css -%}
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="{{ url_for('q_agentd.static', filename='css/jquery.gridly.css') }}">
+  <link rel="stylesheet" href="{{ url_for('q_agentd.static', filename='css/xivo.css') }}">
+{%- endblock -%}
+
+{%- block content -%}
+  <section class="content">
+    <div class="gridly example"></div>
+    <div id="dialog-form" title="Login agent">
+      <p class="validateTips">All form fields are required.</p>
+      <form>
+      <fieldset>
+        <label for="extension">Extension</label>
+          <input type="text" name="extension" id="extension" value="8000" class="text ui-widget-content ui-corner-all">
+        <label for="context">Context</label>
+          <input type="text" name="context" id="context" value="default" class="text ui-widget-content ui-corner-all">
+        <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+      </fieldset>
+      </form>
+    </div>
+  </section>
+{%- endblock -%}
+

@@ -1,2 +1,3 @@
 git+git://github.com/xivo-pbx/xivo-webi.git
 git+git://github.com/xivo-pbx/xivo-ctid-client.git
+git+git://github.com/xivo-pbx/xivo-agentd-client.git

@@ -17,7 +17,7 @@
 
 import logging
 
-from flask import render_template, current_app, redirect, url_for
+from flask import render_template, current_app, redirect, url_for, request
 from xivo_agentd_client.client import AgentdClient
 from contextlib import contextmanager
 from flask.ext.classy import FlaskView
@@ -48,5 +48,23 @@ class Agentd(FlaskView):
         current_app.config['agentd']['token'] = current_app.config['service_token']
         with agentd_client(current_app.config['agentd']) as agentd:
             agents = agentd.agents.get_agent_statuses()
-        print agents
-        return render_template('agentd.html',form=form, agents=agents)
+        return render_template('agentd.html',form=form, agents=agents, rabbitmq=current_app.config['rabbitmq'])
+
+class AgentdAction(FlaskView):
+    #decorators = [verify_token]
+
+    @get_service_token
+    def get(self, id):
+        current_app.config['agentd']['token'] = current_app.config['service_token']
+        with agentd_client(current_app.config['agentd']) as agentd:
+            agentd.agents.logoff_agent(id)
+        return '', 200
+
+    @get_service_token
+    def post(self, id):
+        extension = request.form.get('extension')
+        context = request.form.get('context')
+        current_app.config['agentd']['token'] = current_app.config['service_token']
+        with agentd_client(current_app.config['agentd']) as agentd:
+            agentd.agents.login_agent(id, extension, context)
+        return '', 200

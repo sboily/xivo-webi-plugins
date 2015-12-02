@@ -1,7 +1,3 @@
-var bus_username = "xivo";
-var bus_password = "xivo";
-var bus_host = "http://192.168.32.80:15674/stomp";
-
 var ws = new SockJS(bus_host);
 var client = Stomp.over(ws);
 client.heartbeat.incoming = 0;
@@ -53,23 +49,19 @@ var events_agent_status = function(e) {
 };
 
 var unlog = function(id) {
-    //var client = new $.RestClient(agentd_host + "/1.0/agents/");
+    var client = new $.RestClient("/x/");
 
-    client.add("by-id");
-    client["by-id"].add("logoff", { stripTrailingSlash: true });
-    client["by-id"].logoff.create(id);
+    client.add("agentd", { stripTrailingSlash: true });
+    client["agentd"].read(id);
 };
 
 var log = function(id) {
-    //var client = new $.RestClient(agentd_host + "/1.0/agents/");
+    var client = new $.RestClient("/x/");
 
     dialog.dialog("close");
     data = {context: $(context).val() , extension:  $(extension).val() };
-    client.add("by-id");
-    client["by-id"].add("login", { stripTrailingSlash: true, 
-                                   stringifyData: true
-                                 });
-    client["by-id"].login.create(id, data);
+    client.add("agentd", { stripTrailingSlash: true });
+    client["agentd"].create(id, data);
 };
 
 var get_context_extension = function() {
@@ -88,6 +80,13 @@ $(function() {
         else if (action == 'unlog')
             unlog(id);
     });
+
+    $('.gridly').gridly({
+      base: 60,
+      gutter: 20,
+      columns: 10
+    });
+
     dialog = $("#dialog-form")
                .dialog({ autoOpen: false, 
                          height: 400,

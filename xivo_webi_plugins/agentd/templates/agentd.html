@@ -21,10 +21,16 @@
       {% for agent in agents %}
         <div id="{{ agent.id }}" class="brick small">
         <p id="number">Agent: {{ agent.number }}</p>
-        <p id="status">Logged: {{ agent.logged }}</p>
-        <p id="action" class="log">
-          <a href="#">log</a>
-        </p>
+        <p id="status">Logged: {{ agent.logged | lower }}</p>
+        {% if agent.logged %}
+          <p id="action" class="unlog">
+            <a href="#">unlog</a>
+          </p>
+        {% else %}
+          <p id="action" class="log">
+            <a href="#">log</a>
+          </p>
+        {% endif %}
         </div>
       {% endfor %}
     </div>
@@ -42,4 +48,11 @@
       </form>
     </div>
   </section>
+
+  <script>
+    var bus_username = "{{ rabbitmq.username }}";
+    var bus_password = "{{ rabbitmq.password }}";
+    var bus_host = "{{ rabbitmq.scheme }}://{{ rabbitmq.host }}:{{ rabbitmq.port }}/stomp";
+  </script>
+
 {%- endblock -%}

@@ -35,11 +35,11 @@ class Plugin(object):
 
     def configure_agentd(self, core):
         core.config['agentd'] = dict()
-        core.config['agentd']['host'] = "192.168.32.80"
+        core.config['agentd']['host'] = "192.168.1.124"
         core.config['agentd']['verify_certificate'] = False
 
         core.config['rabbitmq'] = dict()
-        core.config['rabbitmq']['host'] = "192.168.32.80"
+        core.config['rabbitmq']['host'] = "192.168.1.124"
         core.config['rabbitmq']['port'] = 15675
         core.config['rabbitmq']['scheme'] = "https"
         core.config['rabbitmq']['username'] = "xivo"

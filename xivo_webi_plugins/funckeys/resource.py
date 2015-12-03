@@ -27,7 +27,6 @@ from xivo_ctid_client.client import CtidClient
 
 from xivo_webi.auth import verify_token
 from xivo_webi.auth import current_user
-from xivo_webi.auth import get_service_token
 
 logger = logging.getLogger(__name__)
 
@@ -46,8 +45,8 @@ class FK(FlaskView):
 
     @classy_menu_item('.user', 'User', order=0)
     @classy_menu_item('user.fk', 'My FK', order=0)
-    @get_service_token
     def index(self):
+        current_app.config['confd']['token'] = current_app.config['service_token']
         with confd_client(current_app.config['confd']) as confd:
             fk = gen_template_fk(confd, confd.users.relations(get_id(confd, current_user.get_uuid())).list_funckeys())
         return render_template('fk.html', fk=fk, ws=current_app.config['ws'])

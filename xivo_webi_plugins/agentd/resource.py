@@ -24,7 +24,6 @@ from flask.ext.classy import FlaskView
 
 from xivo_webi.auth import verify_token
 from xivo_webi.auth import current_user
-from xivo_webi.auth import get_service_token
 
 from flask_menu.classy import classy_menu_item
 
@@ -42,7 +41,6 @@ class Agentd(FlaskView):
 
     @classy_menu_item('.agentd', 'Agentd', order=0)
     @classy_menu_item('.agentd.panel', 'Dashboard', order=0)
-    @get_service_token
     def get(self):
         form=FormAgentd()
         current_app.config['agentd']['token'] = current_app.config['service_token']
@@ -51,16 +49,14 @@ class Agentd(FlaskView):
         return render_template('agentd.html',form=form, agents=agents, rabbitmq=current_app.config['rabbitmq'])
 
 class AgentdAction(FlaskView):
-    #decorators = [verify_token]
+    decorators = [verify_token]
 
-    @get_service_token
     def get(self, id):
         current_app.config['agentd']['token'] = current_app.config['service_token']
         with agentd_client(current_app.config['agentd']) as agentd:
             agentd.agents.logoff_agent(id)
         return '', 200
 
-    @get_service_token
     def post(self, id):
         extension = request.form.get('extension')
         context = request.form.get('context')

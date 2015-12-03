@@ -25,7 +25,6 @@ from flask.ext.classy import FlaskView
 
 from xivo_webi.auth import verify_token
 from xivo_webi.auth import current_user
-from xivo_webi.auth import get_service_token
 
 from flask_menu.classy import classy_menu_item
 
@@ -45,7 +44,6 @@ class CTIPassword(FlaskView):
         form=FormCTIPassword()
         return render_template('ctipassword.html',form=form)
 
-    @get_service_token
     def post(self):
         form=FormCTIPassword()
         if form.validate_on_submit():

@@ -49,7 +49,7 @@ class FK(FlaskView):
         current_app.config['confd']['token'] = current_app.config['service_token']
         with confd_client(current_app.config['confd']) as confd:
             fk = gen_template_fk(confd, confd.users.relations(get_id(confd, current_user.get_uuid())).list_funckeys())
-        return render_template('fk.html', fk=fk, ws=current_app.config['ws'])
+        return render_template('fk.html', fk=fk, rabbitmq=current_app.config['rabbitmq'])
 
 def get_id(confd, uuid):
     user = confd.users.get(uuid)

@@ -5,14 +5,15 @@
 {% set page_header_level=("fk",) %}
 
 {%- block additional_js -%}
+  <script>
+    var bus_username = "{{ rabbitmq.username }}";
+    var bus_password = "{{ rabbitmq.password }}";
+    var bus_host = "{{ rabbitmq.scheme }}://{{ rabbitmq.host }}:{{ rabbitmq.port }}/stomp";
+  </script>
 
-    <script>
-        var bus_host = "http://{{ ws.host }}:{{ ws.port }}/ws/bus";
-        var token = "{{ current_user.token }}";
-    </script>
-
-    <script src="{{ url_for('q_fk.static', filename='js/sockjs.min.js') }}"></script>
-    <script src="{{ url_for('q_fk.static', filename='js/xivo.js') }}"></script>
+  <script src="//raw.githubusercontent.com/jmesnil/stomp-websocket/master/lib/stomp.min.js"></script>
+  <script src="{{ url_for('q_fk.static', filename='js/sockjs.min.js') }}"></script>
+  <script src="{{ url_for('q_fk.static', filename='js/xivo.js') }}"></script>
 {%- endblock -%}
 
 {%- block content -%}

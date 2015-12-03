@@ -48,7 +48,7 @@ class Agentd(FlaskView):
             agents = agentd.agents.get_agent_statuses()
         return render_template('agentd.html',form=form, agents=agents, rabbitmq=current_app.config['rabbitmq'])
 
-class AgentdAction(FlaskView):
+class AgentdLoginLogoff(FlaskView):
     decorators = [verify_token]
 
     def get(self, id):
@@ -63,4 +63,21 @@ class AgentdAction(FlaskView):
         current_app.config['agentd']['token'] = current_app.config['service_token']
         with agentd_client(current_app.config['agentd']) as agentd:
             agentd.agents.login_agent(id, extension, context)
+        return '', 200
+
+class AgentdPauseUnpause(FlaskView):
+    decorators = [verify_token]
+
+    def get(self, number):
+        current_app.config['agentd']['token'] = current_app.config['service_token']
+        with agentd_client(current_app.config['agentd']) as agentd:
+            agentd.agents.unpause_agent_by_number(number)
+        return '', 200
+
+    def post(self, number):
+        extension = request.form.get('extension')
+        context = request.form.get('context')
+        current_app.config['agentd']['token'] = current_app.config['service_token']
+        with agentd_client(current_app.config['agentd']) as agentd:
+            agentd.agents.pause_agent_by_number(number)
         return '', 200

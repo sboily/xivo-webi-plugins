@@ -33,7 +33,11 @@ class Plugin(object):
 
     def configure(self, core):
         core.config['ctid'] = dict()
-        core.config['ctid']['host'] = '192.168.1.124'
+        core.config['ctid']['host'] = '192.168.32.80'
 
-        core.config['ws'] = dict()
-        core.config['ws']['host'] = '192.168.1.124'
+        core.config['rabbitmq'] = dict()
+        core.config['rabbitmq']['host'] = "192.168.32.80"
+        core.config['rabbitmq']['port'] = 15675
+        core.config['rabbitmq']['scheme'] = "https"
+        core.config['rabbitmq']['username'] = "xivo"
+        core.config['rabbitmq']['password'] = "xivo"

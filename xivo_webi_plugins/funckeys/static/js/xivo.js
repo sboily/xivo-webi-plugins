@@ -1,24 +1,25 @@
 var ws = new SockJS(bus_host);
+var client = Stomp.over(ws);
 
-ws.onmessage = function(m) {
-    raw = $.parseJSON(m.data)
+client.heartbeat.incoming = 0;
+client.heartbeat.outgoing = 0;
+
+var onmessage = function(m) {
+    raw = $.parseJSON(m.body)
     on_status_change(raw.data);
-    ack = {
-        'ack': true
-    }
-    ws.send(JSON.stringify(ack));
 }
 
-ws.onopen = function() {
-    token = {
-        'token': token
-    }
-    ws.send(JSON.stringify(token));
+var on_connect = function(x) {
+    id = client.subscribe("/exchange/xivo/status.*", onmessage);
 };
 
-ws.onclose = function() {
+var onclose = function() {
      console.log('Connection close');
      ws.close();
+};
+
+var on_error =  function(e) {
+    console.log('Stromp error: ' + e);
 };
 
 var on_status_change = function(s) {
@@ -56,3 +57,7 @@ var set_color_on_status = function(endpoint_status) {
 
     return color
 }
+
+$(function() {
+    client.connect(bus_username, bus_password, on_connect, on_error, '/');
+});

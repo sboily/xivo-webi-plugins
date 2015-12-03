@@ -1,6 +1,11 @@
 {%- extends "layout_user.html" -%}
 
 {%- block additional_js -%}
+  <script>
+    var bus_username = "{{ rabbitmq.username }}";
+    var bus_password = "{{ rabbitmq.password }}";
+    var bus_host = "{{ rabbitmq.scheme }}://{{ rabbitmq.host }}:{{ rabbitmq.port }}/stomp";
+  </script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <script src="//cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js"></script>
   <script src="//raw.githubusercontent.com/jmesnil/stomp-websocket/master/lib/stomp.min.js"></script>
@@ -48,11 +53,4 @@
       </form>
     </div>
   </section>
-
-  <script>
-    var bus_username = "{{ rabbitmq.username }}";
-    var bus_password = "{{ rabbitmq.password }}";
-    var bus_host = "{{ rabbitmq.scheme }}://{{ rabbitmq.host }}:{{ rabbitmq.port }}/stomp";
-  </script>
-
 {%- endblock -%}

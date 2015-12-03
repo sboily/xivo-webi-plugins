@@ -1,5 +1,6 @@
 var ws = new SockJS(bus_host);
 var client = Stomp.over(ws);
+
 client.heartbeat.incoming = 0;
 client.heartbeat.outgoing = 0;
 
@@ -64,6 +65,21 @@ var log = function(id) {
     client["agentd"].create(id, data);
 };
 
+var unpause = function(number) {
+    var client = new $.RestClient("/x/");
+
+    client.add("agentd");
+    client.agentd.add("unpause");
+    client.agentd.unpause.read(id);
+};
+
+var pause = function(number) {
+    var client = new $.RestClient("/x/");
+
+    client.add("agentd");
+    client.agentd.add("agentd");
+    client.agentd.pause.create(number);
+};
 var get_context_extension = function() {
     dialog.dialog("open");
 }

@@ -32,12 +32,8 @@ class Plugin(object):
         self.configure(core)
 
     def configure(self, core):
-        core.config['ctid'] = dict()
-        core.config['ctid']['host'] = '192.168.32.80'
+        if not core.config.get('ctid', None):
+            print "Missing configuration for agentd"
 
-        core.config['rabbitmq'] = dict()
-        core.config['rabbitmq']['host'] = "192.168.32.80"
-        core.config['rabbitmq']['port'] = 15675
-        core.config['rabbitmq']['scheme'] = "https"
-        core.config['rabbitmq']['username'] = "xivo"
-        core.config['rabbitmq']['password'] = "xivo"
+        if not core.config.get('rabbitmq', None):
+            print "Missing configuration for rabbitmq"
